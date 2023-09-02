@@ -23,7 +23,7 @@ namespace DotNet7.Template.Api.Controllers
             _weatherService = weatherService;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet("GetWeatherForecast")]
         public List<WeatherForecastViewModel> Get()
         {
             return _mapper.Map<List<WeatherForecastViewModel>>(
