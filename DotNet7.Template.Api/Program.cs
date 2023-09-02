@@ -1,3 +1,4 @@
+using DotNet7.Template.Api.ServiceProviders;
 using DotNet7.Template.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IWeatherService, WeatherService>();
+ServiceMapperProvider.GetServiceProvider(builder.Services);
+DatabaseServiceProvider.AddDatabaseContext(builder.Services, builder.Configuration);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

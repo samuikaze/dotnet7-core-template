@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet7.Template.Api", "DotNet7.Template.Api\DotNet7.Template.Api.csproj", "{03D00360-1A09-4F32-AB63-D40B7AC940BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet7.Template.Api", "DotNet7.Template.Api\DotNet7.Template.Api.csproj", "{03D00360-1A09-4F32-AB63-D40B7AC940BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4EB6263A-6839-4574-AC74-98AF027FE711} = {4EB6263A-6839-4574-AC74-98AF027FE711}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet7.Template.Repository", "DotNet7.Template.Repository\DotNet7.Template.Repository.csproj", "{4EB6263A-6839-4574-AC74-98AF027FE711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet7.Template.Repository", "DotNet7.Template.Repository\DotNet7.Template.Repository.csproj", "{4EB6263A-6839-4574-AC74-98AF027FE711}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{DE7C52D2-E0D9-40C0-B19E-C791F383A993}"
 	ProjectSection(SolutionItems) = preProject

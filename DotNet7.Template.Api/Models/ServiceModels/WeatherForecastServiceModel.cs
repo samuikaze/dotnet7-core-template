@@ -1,6 +1,6 @@
-namespace DotNet7.Template.Api
+﻿namespace DotNet7.Template.Api.Models.ServiceModels
 {
-    public class WeatherForecast
+    public class WeatherForecastServiceModel
     {
         public DateOnly Date { get; set; }
 

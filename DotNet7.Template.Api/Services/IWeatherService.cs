@@ -1,7 +1,9 @@
-﻿namespace DotNet7.Template.Api.Services
+﻿using DotNet7.Template.Api.Models.ServiceModels;
+
+namespace DotNet7.Template.Api.Services
 {
     public interface IWeatherService
     {
-        public WeatherForecast[] Get();
+        public List<WeatherForecastServiceModel> Get();
     }
 }
