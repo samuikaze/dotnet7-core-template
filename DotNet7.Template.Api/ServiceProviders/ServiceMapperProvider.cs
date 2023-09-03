@@ -1,4 +1,4 @@
-﻿using DotNet7.Template.Api.Services;
+using DotNet7.Template.Api.Services;
 
 namespace DotNet7.Template.Api.ServiceProviders
 {

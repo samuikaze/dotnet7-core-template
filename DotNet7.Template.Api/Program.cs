@@ -1,5 +1,6 @@
 using DotNet7.Template.Api.ServiceProviders;
 using DotNet7.Template.Api.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 SwaggerDefinitionServiceProvider.ConfigureSwagger(builder.Services);
 ServiceMapperProvider.GetServiceProvider(builder.Services);
 DatabaseServiceProvider.AddDatabaseContext(builder.Services, builder.Configuration);
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
@@ -22,7 +24,20 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(config =>
+    {
+        string? path = app.Configuration.GetValue<string>("Swagger:RoutePrefix");
+        if (!string.IsNullOrEmpty(path))
+        {
+            config.PreSerializeFilters.Add((swaggerDoc, httpRequest) =>
+            {
+                string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "https";
+                swaggerDoc.Servers = new List<OpenApiServer> {
+                    new OpenApiServer { Url = $"{httpScheme}://{httpRequest.Host.Value}{path}" }
+                };
+            });
+        }
+    });
     app.UseSwaggerUI();
 }
 

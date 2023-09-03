@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DotNet7.Template.Api.Models.ServiceModels;
 using DotNet7.Template.Api.Models.ViewModels;
 

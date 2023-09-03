@@ -1,4 +1,4 @@
-﻿namespace LSGames.News.Api.Models.ViewModels
+namespace LSGames.News.Api.Models.ViewModels
 {
     public class ExceptionResponseViewModel
     {

@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["DotNet7.Template.Api/DotNet7.Template.Api.csproj", "DotNet7.Template.Api/"]
+COPY ["DotNet7.Template.Repository/DotNet7.Template.Repository.csproj", "DotNet7.Template.Repository/"]
 RUN dotnet restore "DotNet7.Template.Api/DotNet7.Template.Api.csproj"
 COPY . .
 WORKDIR "/src/DotNet7.Template.Api"

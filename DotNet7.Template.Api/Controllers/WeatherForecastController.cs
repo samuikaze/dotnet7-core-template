@@ -8,7 +8,7 @@ namespace DotNet7.Template.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [SwaggerTag("®ğ¶H¹w³ø")]
+    [SwaggerTag("æ°£è±¡é å ±")]
     public class WeatherForecastController : ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
@@ -26,7 +26,7 @@ namespace DotNet7.Template.Api.Controllers
         }
 
         /// <summary>
-        /// ¨ú±o¤Ñ®ğ¹w³ø
+        /// å–å¾—å¤©æ°£é å ±
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetWeatherForecast")]

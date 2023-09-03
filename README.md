@@ -1,55 +1,144 @@
 # DotNet 7 Template
 
-³o¥÷ÀÉ®×±N·|»¡©ú¦p¦ó±q³o­Ó¼ÒªO¤¤¶}©l·sªº«áºİ¸Ñ¨M¤è®×
+é€™ä»½æª”æ¡ˆå°‡æœƒèªªæ˜å¦‚ä½•å¾é€™å€‹æ¨¡æ¿ä¸­é–‹å§‹æ–°çš„å¾Œç«¯è§£æ±ºæ–¹æ¡ˆ
 
-## ¨Ï¥Î«e
+## ä½¿ç”¨å‰
 
-1. ½Ğ¥ıÃö³¬ Visual Studio «á¡A±N¸ê®Æ§¨¦WºÙ­«·s©R¦W
-2. ¥H Visual Studio ­«·s¶}±Ò±M®×¡A¨Ã°w¹ï Api ±M®×¤¤ `ProjectReference` ªº¸ô®|°µ­×§ï
-	> ­Y§ä¤£¨ì¦¹«Å§i¡A«h¥i¸õ¹L³o¨BÆJ
-3. ±N API¡BRepository ±M®×¦WºÙ­«·s©R¦W
-4. °w¹ï±M®×ÂI¿ï¥kÁä -> ¦P¨B©R¦WªÅ¶¡
-5. ½T»{¦UÃş§O»P¤¶­±ªº©R¦WªÅ¶¡¬O§_¥¿½T
+1. è«‹å…ˆé—œé–‰ Visual Studio å¾Œï¼Œå°‡è³‡æ–™å¤¾åç¨±é‡æ–°å‘½å
+2. ä»¥ Visual Studio é‡æ–°é–‹å•Ÿå°ˆæ¡ˆï¼Œä¸¦é‡å° Api å°ˆæ¡ˆä¸­ `ProjectReference` çš„è·¯å¾‘åšä¿®æ”¹
+	> è‹¥æ‰¾ä¸åˆ°æ­¤å®£å‘Šï¼Œå‰‡å¯è·³éé€™æ­¥é©Ÿ
+3. å°‡ APIã€Repository å°ˆæ¡ˆåç¨±é‡æ–°å‘½å
+4. é‡å°å°ˆæ¡ˆé»é¸å³éµ -> åŒæ­¥å‘½åç©ºé–“
+5. ä¿®æ”¹ `build-push-deploy.yml` æª”ä¸­çš„ `DotNet7.Template.Api/Dockerfile` å°‡ `DotNet7.Template.Api` ä¿®æ”¹ç‚ºæ­£ç¢ºçš„å°ˆæ¡ˆåç¨±
+6. ç¢ºèªå„é¡åˆ¥èˆ‡ä»‹é¢çš„å‘½åç©ºé–“æ˜¯å¦æ­£ç¢º
+7. è‹¥æœ‰éœ€è¦ï¼Œå¯ä»¥ä¿®æ”¹ `appsettings.Development.json` ä¸­ `Swagger.RoutePrefix` è¨­å®šï¼Œæ­¤ç”¨é€”ç‚ºè¨­å®š API è·¯å¾‘å‰ç¶´
+
+å¦å¤–ï¼Œè‹¥ Visual Studio å°‡æª”æ¡ˆå„²å­˜æˆ UTF-8 With BOM æœƒé€ æˆå•é¡Œï¼Œè«‹ä¾æ“šä»¥ä¸‹æ­¥é©Ÿè¨­å®šï¼š
+
+1. å®‰è£ `Fix File Encoding` å»¶ä¼¸æ¨¡çµ„
+2. æ‰“é–‹ `å·¥å…·` > `é¸é …` > å·¦å´é¸å–®é¸æ“‡ `Fix File Encoding`
+3. åœ¨å³å´ `UTF8 without signature files regex` è¼¸å…¥æ¡†ä¸­è¼¸å…¥ `\.(.+)$` å…¨éƒ¨å¥—ç”¨
+4. æŒ‰ä¸‹ç¢ºå®šå®Œæˆ
 
 ## appSettings.json
 
-¦p»İ¨Ï¥Î¸ê®Æ®w¡A½Ğ¥´¶} `ServiceProviders/DatabaseServiceProvider.cs` ±Nµù¸Ñ¥ş³¡¥´¶}¡A¨Ã­×§ï DBContext ¦WºÙ¬°¥¿½Tªº¦WºÙ¡A¦P®É½Ğ±N¸ê®Æ®w³s½u¦r¦ê¡B¸ê®Æ®w±b¸¹»P±K½X³]©w§¹¦¨¡A§_«h±M®×±NµLªk±Ò°Ê
+å¦‚éœ€ä½¿ç”¨è³‡æ–™åº«ï¼Œè«‹æ‰“é–‹ `ServiceProviders/DatabaseServiceProvider.cs` å°‡è¨»è§£å…¨éƒ¨æ‰“é–‹ï¼Œä¸¦ä¿®æ”¹ DBContext åç¨±ç‚ºæ­£ç¢ºçš„åç¨±ï¼ŒåŒæ™‚è«‹å°‡è³‡æ–™åº«é€£ç·šå­—ä¸²ã€è³‡æ–™åº«å¸³è™Ÿèˆ‡å¯†ç¢¼è¨­å®šå®Œæˆï¼Œå¦å‰‡å°ˆæ¡ˆå°‡ç„¡æ³•å•Ÿå‹•
 
-## Service »P Repository Ãş§O»P¤¶­±¸j©w
+## Service èˆ‡ Repository é¡åˆ¥èˆ‡ä»‹é¢ç¶å®š
 
-Service »P Repository ªºÃş§O»P¤¶­±»İ¶i¦æ¸j©w¡A§_«h DI ±NµLªk¥¿±`ª`¤J
+Service èˆ‡ Repository çš„é¡åˆ¥èˆ‡ä»‹é¢éœ€é€²è¡Œç¶å®šï¼Œå¦å‰‡ DI å°‡ç„¡æ³•æ­£å¸¸æ³¨å…¥
 
-1. ¥´¶} `ServiceProviders/ServiceMapperProvider.cs`¡A¨Ì¾Ú½d¨Ò±NÃş§O»P¤¶­±¸j©w°_¨Ó
+1. æ‰“é–‹ `ServiceProviders/ServiceMapperProvider.cs`ï¼Œä¾æ“šç¯„ä¾‹å°‡é¡åˆ¥èˆ‡ä»‹é¢ç¶å®šèµ·ä¾†
 
-## Repository ±M®×³]©w
+## Repository å°ˆæ¡ˆè¨­å®š
 
-1. ¥ı±N Repository ±M®×³]©w¬°±Ò°Ê±M®×
-2. ¨Ï¥Î¥H¤U«ü¥O±N«ü©w¸ê®Æ®w¤¤ªº¸ê®Æªí¶i¦æ¤Ï¦V¤uµ{¡A«Ø¥ß¥X Model ª«¥ó
+1. å…ˆå°‡ Repository å°ˆæ¡ˆè¨­å®šç‚ºå•Ÿå‹•å°ˆæ¡ˆ
+2. ä½¿ç”¨ä»¥ä¸‹æŒ‡ä»¤å°‡æŒ‡å®šè³‡æ–™åº«ä¸­çš„è³‡æ–™è¡¨é€²è¡Œåå‘å·¥ç¨‹ï¼Œå»ºç«‹å‡º Model ç‰©ä»¶
 
 	```Powershell
 	Scaffold-DbContext "Server=<SERVER_URI>; Port=<SERVER_PORT>; Database=<DATABASE_NAME>; User ID=<DATABASE_USERNAME>; Password=<DATABASE_PASSWORD>" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -ContextDir DBContexts -Tables <TABLE_NAME> Project <REPOSITORY_PROJECT_NAME> -Force -NoOnConfiguring
 	```
 
-3. ¥´¶} `ServiceProviders/DatabaseServiceProvider.cs`¡A±N³Ì¤U¤èªºµù¸Ñ¥´¶}¡A¨Ã±N DBContext ­×§ï¬°¥¿½TªºÃş§O
-	> ­Y¦³¦h­Ó DBContext ¤]½Ğ¦b³oÃä¤@¨Ã«Å§i
-4. ±N Api ±M®×³]©w¬°±Ò°Ê±M®×
+3. æ‰“é–‹ `ServiceProviders/DatabaseServiceProvider.cs`ï¼Œå°‡æœ€ä¸‹æ–¹çš„è¨»è§£æ‰“é–‹ï¼Œä¸¦å°‡ DBContext ä¿®æ”¹ç‚ºæ­£ç¢ºçš„é¡åˆ¥
+	> è‹¥æœ‰å¤šå€‹ DBContext ä¹Ÿè«‹åœ¨é€™é‚Šä¸€ä¸¦å®£å‘Š
+4. å°‡ Api å°ˆæ¡ˆè¨­å®šç‚ºå•Ÿå‹•å°ˆæ¡ˆ
 
-## AutoMapper Profile «Å§i
+## AutoMapper Profile å®£å‘Š
 
-1. ¦b `AutoMapperProfiles` ¸ê®Æ§¨¤U·s¼W¤@­Ó ¥ô·N¦WºÙªº Profile Ãş§O
-2. ¦bÃş§O¤¤«Å§i»İ­n¶i¦æ Mapper ªºÃş§O¸j©w
+1. åœ¨ `AutoMapperProfiles` è³‡æ–™å¤¾ä¸‹æ–°å¢ä¸€å€‹ ä»»æ„åç¨±çš„ Profile é¡åˆ¥
+2. åœ¨é¡åˆ¥ä¸­å®£å‘Šéœ€è¦é€²è¡Œ Mapper çš„é¡åˆ¥ç¶å®š
 
-## °Ñ¦Ò¸ê®Æ
+## ç’°å¢ƒè®Šæ•¸
+
+ASP.Net å–ç”¨è¨­å®šåç¨±å¸¸ä½¿ç”¨ `:` ä½œç‚ºéšå±¤çš„åˆ†éš”ï¼Œä½†è¨±å¤šç³»çµ±ä¸¦ä¸æ”¯æ´æ–¼ç’°å¢ƒè®Šæ•¸åç¨±ä¸­åŒ…å« `:` å­—ç¬¦ï¼Œå› æ­¤å¯ä»¥ `__` (é›™åº•ç·š) å–ä»£ `:`ï¼Œå…¶å…§éƒ¨æœƒè‡ªå‹•åšè½‰æ›ã€‚
+
+## æ­£å¼æ©Ÿä¹Ÿå¯ä½¿ç”¨ Swagger
+
+è‹¥éœ€è¦æ–¼æ­£å¼æ©Ÿå™¨ä¸Šä½¿ç”¨ Swaggerï¼Œè«‹æ‰“é–‹ `Program.cs`ï¼Œå°‡
+
+```csharp
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger(config =>
+    {
+        string? path = app.Configuration.GetValue<string>("Swagger:RoutePrefix");
+        if (!string.IsNullOrEmpty(path))
+        {
+            config.PreSerializeFilters.Add((swaggerDoc, httpRequest) =>
+            {
+                string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "https";
+                swaggerDoc.Servers = new List<OpenApiServer> {
+                    new OpenApiServer { Url = $"{httpScheme}://{httpRequest.Host.Value}{path}" }
+                };
+            });
+        }
+    });
+    app.UseSwaggerUI();
+}
+```
+
+ä¿®æ”¹ç‚º
+
+```csharp
+//if (app.Environment.IsDevelopment())
+//{
+    app.UseSwagger(config =>
+    {
+        string? path = app.Configuration.GetValue<string>("Swagger:RoutePrefix");
+        if (!string.IsNullOrEmpty(path))
+        {
+            config.PreSerializeFilters.Add((swaggerDoc, httpRequest) =>
+            {
+                string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "https";
+                swaggerDoc.Servers = new List<OpenApiServer> {
+                    new OpenApiServer { Url = $"{httpScheme}://{httpRequest.Host.Value}{path}" }
+                };
+            });
+        }
+    });
+    app.UseSwaggerUI();
+//}
+```
+
+å¦å¤–ï¼Œè‹¥æ­£å¼æ©Ÿä½¿ç”¨çš„ç¶²å€åŒ…å«æœ‰è‡ªè¨‚çš„è·¯å¾‘ (ä¾‹å¦‚: ingress è¨­å®š)ï¼Œè«‹å°‡è©²è·¯å¾‘åŠ å…¥ `Swagger__RoutePrefix` ç’°å¢ƒè®Šæ•¸ä¸­
+
+è‹¥æ­£å¼æ©Ÿæœªä½¿ç”¨ TLSï¼Œè«‹æ‰“é–‹ `Program.cs` ä¸¦æ‰¾åˆ°
+
+```csharp
+string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "https";
+```
+
+å°‡ä¹‹ä¿®æ”¹ç‚º
+
+```csharp
+string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "http";
+```
+
+## åƒè€ƒè³‡æ–™
 
 - [Using the Repository Pattern with the Entity Framework](https://medium.com/@mlbors/using-the-repository-pattern-with-the-entity-framework-fa4679f2139)
 - [Scaffolding (Reverse Engineering)](https://learn.microsoft.com/en-us/ef/core/managing-schemas/scaffolding/?tabs=vs)
 - [Get ConnectionString from appsettings.json](https://stackoverflow.com/a/45845041)
 - [Setting connection string with username and password in ASP.Core](https://stackoverflow.com/a/41624833)
-- [[EF Core] ¨Ï¥Î.NET Core CLI«Ø¥ß¸ê®Æ®w¹êÅéÃş«¬](https://dotblogs.com.tw/jerry809/2019/03/13/105934)
+- [[EF Core] ä½¿ç”¨.NET Core CLIå»ºç«‹è³‡æ–™åº«å¯¦é«”é¡å‹](https://dotblogs.com.tw/jerry809/2019/03/13/105934)
 - [Creating a Model for an Existing Database in Entity Framework Core](https://www.entityframeworktutorial.net/efcore/create-model-for-existing-database-in-ef-core.aspx)
 - [Pomelo EntityFrameworkCore Mysql - Getting Started](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/blob/master/README.md#getting-started)
-- [AutoMapper ¡X¡X Ãş§OÂà´«¶W¬Ù¤O](https://igouist.github.io/post/2020/07/automapper/)
+- [AutoMapper â€”â€” é¡åˆ¥è½‰æ›è¶…çœåŠ›](https://igouist.github.io/post/2020/07/automapper/)
 - [Dependency Injection - Automapper documentation](https://docs.automapper.org/en/stable/Dependency-injection.html)
 - [How can I rename a project folder from within Visual Studio?](https://stackoverflow.com/questions/211241/how-can-i-rename-a-project-folder-from-within-visual-studio)
 - [Does Swagger (Asp.Net Core) have a controller description?](https://stackoverflow.com/a/56395820)
 - [Datetime utc issue after migrating to .NET Core 7](https://stackoverflow.com/a/75580112)
+- [How to add method description in Swagger UI in WebAPI Application](https://stackoverflow.com/a/52958904)
+- [Swashbuckle.AspNetCore Include Descriptions From XML Comments](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments)
+- [How to config visual studio to use UTF-8 as the default encoding for all projects?](https://stackoverflow.com/a/65945041)
+- [Visual Studio: Add existing folder(s) to project](https://stackoverflow.com/a/40491760)
+- [[Docker] .NET Core çš„ Dockerfile æŒ‡ä»¤è©³è§£](https://www.dotblogs.com.tw/fire/2022/10/27/225738)
+- [dotnet publish](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-publish)
+- [ä½¿ç”¨ dotnet å‘½ä»¤åˆ—å·¥å…·ç™¼è¡Œ .NET 6 å°ˆæ¡ˆ](https://blog.darkthread.net/blog/dotnet6-publish-notes/)
+- [æ•™å­¸èª²ç¨‹ï¼šå®¹å™¨åŒ– .NET æ‡‰ç”¨ç¨‹å¼](https://learn.microsoft.com/zh-tw/dotnet/core/docker/build-container?tabs=windows)
+- [Override ASP.NET Core appsettings key name that as dots with environment variable in a container](https://stackoverflow.com/a/74596837)
+- [Non-prefixed environment variables](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-7.0&WT.mc_id=DT-MVP-5002040#non-prefixed-environment-variables)
+- [ASP.NET Core Configuration values sometimes returns empty in Kubernetes](https://stackoverflow.com/a/63736378)
+- [ASP.NET Core Environment variable colon in Linux](https://stackoverflow.com/a/40094999)
+- [How to set base path property in swagger for .Net Core Web API](https://stackoverflow.com/a/61966213)
+- [What's the difference between HttpRequest.Path and HttpRequest.PathBase in ASP.NET Core?](https://stackoverflow.com/a/58615034)

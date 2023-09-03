@@ -1,0 +1,110 @@
+name: Build and run test with the image
+
+on:
+  # 僅允許當 main 分支有變更時執行
+  push:
+    # 避免 GitHub 又跑一次 CI/CD，先把分支指定為不會變動的分支
+    branches: [ "main" ]
+  # 如需允許開立 PR 當下就執行，請開啟以下註解
+  # pull_request:
+      # PR 的目標分支符合底下的宣告才會觸發
+  #   branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build
+    # # 目前 Runner 有 SELinux Policy 問題，先暫時改用 GitHub 的 Runner
+    # runs-on: <SELF_HOSTED_RUNNER>
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    # 若是使用 self-hosted 的 runner，需額外安裝 docker/buildx，請將下面的註解打開
+    - name: Install Docker buildx
+      run: |
+        mkdir -p "$HOME/.docker/cli-plugins"
+        curl -SsL "https://github.com/docker/buildx/releases/download/v0.7.1/buildx-v0.7.1.linux-amd64" -o "$HOME/.docker/cli-plugins/docker-buildx"
+        chmod +x "$HOME/.docker/cli-plugins/docker-buildx"
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      with:
+        driver: docker
+    - name: Build the Docker image
+      # secrets.REGISTRY_URL 為映像檔伺服器的 URL
+      # vars.APP_NAME 為應用程式的名稱，也就是這個映像檔的名稱
+      # github.sha 用作區分版本，這個值是 Git commit 時產生的 hash 值
+      run: docker build . --file DotNet7.Template.Api/Dockerfile --tag ${{ secrets.REGISTRY_URL }}/${{ vars.APP_NAME }}:${{ github.sha }}
+    - name: Login to private registry
+      uses: docker/login-action@v2.1.0
+      with:
+        registry: ${{ secrets.REGISTRY_URL }}
+        # 登入映像檔伺服器的帳號
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        # 登入映像檔伺服器的密碼
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ./DotNet7.Template.Api/Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        push: true
+        tags: '${{ secrets.REGISTRY_URL }}/${{ vars.APP_NAME }}:${{ github.sha }}'
+        # 底下為緩存設定，這邊暫時不打開，因為沒有測過
+        # cache-from: 'type=registry,ref=${{ secrets.REGISTRY_URL }}/${{ vars.APP_NAME }}:buildcache'
+        # cache-to: 'type=registry,ref=${{ secrets.REGISTRY_URL }}/${{ vars.APP_NAME }}:buildcache,mode=max'
+
+  deploy:
+    name: Deploy
+    # 必須先執行過 build 動作才可以執行 Deploy 動作
+    needs: [ build ]
+    # 目前 Runner 有 SELinux Policy 問題，先暫時改用 GitHub 的 Runner
+    # runs-on: <SELF_HOSTED_RUNNER>
+    runs-on: ubuntu-22.04
+    steps:
+      # 若是使用 self-hosted 的 runner，需額外安裝 kubectl，請將下面的註解打開
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+          echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v3
+        with:
+          method: service-account
+          # K8s 的 api-server URL
+          k8s-url: ${{ secrets.KUBERNETES_SERVER_URL }}
+          # Service Account 繫結的 secret yaml 內容
+          k8s-secret: ${{ secrets.KUBERNETES_SECRETS }}
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      # 從 GitHub secret 取得部署檔內容
+      # 這個之前測試沒有成功，如要使用需要先做測試，可以參考 README 中的 Write Secrets to File 連結
+      # - name: Get deployment yaml from secret
+      #   run: echo "${{ secrets.DEPLOYMENT_MANIFEST }}" | base64 --decode >> ./kubernetes/deployment.yaml
+      - name: Replace registry uri
+        run: |
+          sed -i 's/$secrets.REGISTRY_URL/${{ secrets.REGISTRY_URL }}/g' ./.kubernetes/deployment.yaml
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v4
+        with:
+          action: deploy
+          # 如果非雲服務提供商，且無法提供有效的憑證與簽章，請打開此項的設定
+          skip-tls-verify: true
+          # 指定要部署的文件名稱與位置
+          # 也可以指定資料夾，這個 Action 會把資料夾下的所有 yaml 檔案拿出來部署
+          manifests: |
+            .kubernetes/deployment.yaml
+          # 要部署的應用程式所在 namespace
+          # Service Account 所在的 namespace 也要一樣，否則部署會因權限被拒絕
+          namespace: <NAMESPACE>
+          # 這邊宣告部署檔中的 image
+          # 由於 image 版本是 git commit 的 hash 字串
+          # 在這邊宣告完後，這樣這個 Action 就會去找 yaml 中 image 欄位符合 ${{ secrets.REGISTRY_URL }}/${{ vars.APP_NAME }} 者取代其版本的字串
+          images: |
+            ${{ secrets.REGISTRY_URL }}/${{ vars.APP_NAME }}:${{ github.sha }}
