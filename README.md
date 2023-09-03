@@ -4,8 +4,12 @@
 
 ## 使用前
 
-1. 請先將 API、Repository 專案名稱重新命名
-2. 將確認各類別與介面的命名空間是否正確
+1. 請先關閉 Visual Studio 後，將資料夾名稱重新命名
+2. 以 Visual Studio 重新開啟專案，並針對 Api 專案中 `ProjectReference` 的路徑做修改
+	> 若找不到此宣告，則可跳過這步驟
+3. 將 API、Repository 專案名稱重新命名
+4. 針對專案點選右鍵 -> 同步命名空間
+5. 確認各類別與介面的命名空間是否正確
 
 ## appSettings.json
 
@@ -46,3 +50,4 @@ Service 與 Repository 的類別與介面需進行綁定，否則 DI 將無法正常注入
 - [Pomelo EntityFrameworkCore Mysql - Getting Started](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/blob/master/README.md#getting-started)
 - [AutoMapper —— 類別轉換超省力](https://igouist.github.io/post/2020/07/automapper/)
 - [Dependency Injection - Automapper documentation](https://docs.automapper.org/en/stable/Dependency-injection.html)
+- [How can I rename a project folder from within Visual Studio?](https://stackoverflow.com/questions/211241/how-can-i-rename-a-project-folder-from-within-visual-studio)

@@ -23,6 +23,10 @@ namespace DotNet7.Template.Api.Controllers
             _weatherService = weatherService;
         }
 
+        /// <summary>
+        /// 取得天氣預報
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetWeatherForecast")]
         public List<WeatherForecastViewModel> Get()
         {
