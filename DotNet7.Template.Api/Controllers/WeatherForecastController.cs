@@ -2,11 +2,13 @@ using AutoMapper;
 using DotNet7.Template.Api.Models.ViewModels;
 using DotNet7.Template.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace DotNet7.Template.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [SwaggerTag("氣象預報")]
     public class WeatherForecastController : ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;

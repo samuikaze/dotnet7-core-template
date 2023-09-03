@@ -51,3 +51,4 @@ Service 與 Repository 的類別與介面需進行綁定，否則 DI 將無法正常注入
 - [AutoMapper —— 類別轉換超省力](https://igouist.github.io/post/2020/07/automapper/)
 - [Dependency Injection - Automapper documentation](https://docs.automapper.org/en/stable/Dependency-injection.html)
 - [How can I rename a project folder from within Visual Studio?](https://stackoverflow.com/questions/211241/how-can-i-rename-a-project-folder-from-within-visual-studio)
+- [Does Swagger (Asp.Net Core) have a controller description?](https://stackoverflow.com/a/56395820)
