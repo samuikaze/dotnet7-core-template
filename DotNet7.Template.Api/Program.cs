@@ -1,5 +1,4 @@
 using DotNet7.Template.Api.ServiceProviders;
-using DotNet7.Template.Api.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

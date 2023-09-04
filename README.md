@@ -36,7 +36,7 @@ Service 與 Repository 的類別與介面需進行綁定，否則 DI 將無法�
 2. 使用以下指令將指定資料庫中的資料表進行反向工程，建立出 Model 物件
 
 	```Powershell
-	Scaffold-DbContext "Server=<SERVER_URI>; Port=<SERVER_PORT>; Database=<DATABASE_NAME>; User ID=<DATABASE_USERNAME>; Password=<DATABASE_PASSWORD>" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -ContextDir DBContexts -Tables <TABLE_NAME> Project <REPOSITORY_PROJECT_NAME> -Force -NoOnConfiguring
+	Scaffold-DbContext "Server=<SERVER_URI>; Port=<SERVER_PORT>; Database=<DATABASE_NAME>; User ID=<DATABASE_USERNAME>; Password=<DATABASE_PASSWORD>" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -ContextDir DBContexts -Tables <TABLE_NAME> -Project <REPOSITORY_PROJECT_NAME> -Force -NoOnConfiguring
 	```
 
 3. 打開 `ServiceProviders/DatabaseServiceProvider.cs`，將最下方的註解打開，並將 DBContext 修改為正確的類別
