@@ -22,13 +22,13 @@
 
 ## appSettings.json
 
-如需使用資料庫，請打開 `ServiceProviders/DatabaseServiceProvider.cs` 將註解全部打開，並修改 DBContext 名稱為正確的名稱，同時請將資料庫連線字串、資料庫帳號與密碼設定完成，否則專案將無法啟動
+如需使用資料庫，請打開 `Extensions/DatabaseExtension.cs` 將註解全部打開，並修改 DBContext 名稱為正確的名稱，同時請將資料庫連線字串、資料庫帳號與密碼設定完成，否則專案將無法啟動
 
 ## Service 與 Repository 類別與介面綁定
 
 Service 與 Repository 的類別與介面需進行綁定，否則 DI 將無法正常注入
 
-1. 打開 `ServiceProviders/ServiceMapperProvider.cs`，依據範例將類別與介面綁定起來
+1. 打開 `Extensions/ServiceMapperExtension.cs`，依據範例將類別與介面綁定起來
 
 ## Repository 專案設定
 
@@ -39,7 +39,7 @@ Service 與 Repository 的類別與介面需進行綁定，否則 DI 將無法�
 	Scaffold-DbContext "Server=<SERVER_URI>; Port=<SERVER_PORT>; Database=<DATABASE_NAME>; User ID=<DATABASE_USERNAME>; Password=<DATABASE_PASSWORD>" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -ContextDir DBContexts -Tables <TABLE_NAME> -Project <REPOSITORY_PROJECT_NAME> -Force -NoOnConfiguring
 	```
 
-3. 打開 `ServiceProviders/DatabaseServiceProvider.cs`，將最下方的註解打開，並將 DBContext 修改為正確的類別
+3. 打開 `Extensions/DatabaseExtension.cs`，將最下方的註解打開，並將 DBContext 修改為正確的類別
 	> 若有多個 DBContext 也請在這邊一並宣告
 4. 將 Api 專案設定為啟動專案
 
@@ -114,6 +114,11 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "http";
 ```
 
+## Middlewares
+
+自行撰寫的 Middleware 的以參考[這篇文章](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)進行撰寫，並存於 `Middlewares` 資料夾中，
+再打開 `Extensions/MiddlewareExtension.cs` 檔，加入 `builder.UseMiddleware<YourMiddlewareClassName>()` 即可。
+
 ## 參考資料
 
 - [Using the Repository Pattern with the Entity Framework](https://medium.com/@mlbors/using-the-repository-pattern-with-the-entity-framework-fa4679f2139)
@@ -142,3 +147,7 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [ASP.NET Core Environment variable colon in Linux](https://stackoverflow.com/a/40094999)
 - [How to set base path property in swagger for .Net Core Web API](https://stackoverflow.com/a/61966213)
 - [What's the difference between HttpRequest.Path and HttpRequest.PathBase in ASP.NET Core?](https://stackoverflow.com/a/58615034)
+- [Enabling authentication in swagger](https://stackoverflow.com/questions/71622325/enabling-authentication-in-swagger)
+- [在 Swagger UI 加上驗證按鈕，讓 Request Header 傳遞 Authorize Token](https://igouist.github.io/post/2021/10/swagger-enable-authorize/)
+- [是誰在敲打我窗？什麼是 JWT ？](https://5xruby.tw/posts/what-is-jwt)
+- [Write custom ASP.NET Core middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)

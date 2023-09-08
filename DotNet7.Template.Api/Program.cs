@@ -1,4 +1,4 @@
-using DotNet7.Template.Api.ServiceProviders;
+using DotNet7.Template.Api.Extensions;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +12,10 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-SwaggerDefinitionServiceProvider.ConfigureSwagger(builder.Services);
-ServiceMapperProvider.GetServiceProvider(builder.Services);
-DatabaseServiceProvider.AddDatabaseContext(builder.Services, builder.Configuration);
+SwaggerDefinitionExtension.ConfigureSwagger(builder.Services);
+ServiceMapperExtension.GetServiceProvider(builder.Services);
+DatabaseExtension.AddDatabaseContext(builder.Services, builder.Configuration);
+AuthorizationExtension.ConfigureAuthorization(builder.Services, builder.Configuration);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -43,6 +44,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.ConfigureMiddlewares();
 
 app.MapControllers();
 

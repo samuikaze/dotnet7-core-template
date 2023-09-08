@@ -1,8 +1,8 @@
 using DotNet7.Template.Api.Services;
 
-namespace DotNet7.Template.Api.ServiceProviders
+namespace DotNet7.Template.Api.Extensions
 {
-    public class ServiceMapperProvider
+    public class ServiceMapperExtension
     {
         public static IServiceCollection? GetServiceProvider(IServiceCollection? serviceCollection)
         {

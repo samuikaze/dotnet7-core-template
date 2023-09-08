@@ -1,8 +1,8 @@
 using System.Reflection;
 
-namespace DotNet7.Template.Api.ServiceProviders
+namespace DotNet7.Template.Api.Extensions
 {
-    public class SwaggerDefinitionServiceProvider
+    public class SwaggerDefinitionExtension
     {
         public static IServiceCollection ConfigureSwagger(IServiceCollection serviceCollection)
         {

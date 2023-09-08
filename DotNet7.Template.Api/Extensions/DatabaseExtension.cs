@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace DotNet7.Template.Api.ServiceProviders
+namespace DotNet7.Template.Api.Extensions
 {
-    public class DatabaseServiceProvider
+    public class DatabaseExtension
     {
         public static IServiceCollection AddDatabaseContext(IServiceCollection serviceCollection, IConfiguration config)
         {
