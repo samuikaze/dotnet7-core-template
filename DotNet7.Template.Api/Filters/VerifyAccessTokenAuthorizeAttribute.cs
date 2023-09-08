@@ -18,7 +18,6 @@ namespace DotNet7.Template.Api.Filters
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var accessToken = context.HttpContext.Request.Headers["Authorization"];
-            accessToken = accessToken.ToString().Replace("Bearer ", "");
 
             if (string.IsNullOrEmpty(accessToken))
             {
