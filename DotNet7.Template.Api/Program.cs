@@ -16,6 +16,7 @@ SwaggerDefinitionExtension.ConfigureSwagger(builder.Services);
 ServiceMapperExtension.GetServiceProvider(builder.Services);
 DatabaseExtension.AddDatabaseContext(builder.Services, builder.Configuration);
 AuthorizationExtension.ConfigureAuthorization(builder.Services, builder.Configuration);
+HttpClientExtension.ConfigureHttpClients(builder.Services);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

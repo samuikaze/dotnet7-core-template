@@ -119,7 +119,27 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 自行撰寫的 Middleware 的以參考[這篇文章](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)進行撰寫，並存於 `Middlewares` 資料夾中，
 再打開 `Extensions/MiddlewareExtension.cs` 檔，加入 `builder.UseMiddleware<YourMiddlewareClassName>()` 即可。
 
+## Filter
+
+自行撰寫的 Filter 請放置於 `Filters` 資料夾中，其中若 Filter 中的建構式包含有依賴注入的部份，Controller 使用時請以 `[TypeFilter(typeof(YourFilterName))]` 撰寫。
+
+## HttpClient
+
+自行撰寫的 HttpClient 請放置於 `HttpClients` 資料夾中，撰寫完後，請打開 `Extensions/HttpClientExtension.cs` 檔，增加 `serviceCollection.AddHttpClient<YourCustomClient>();` 即可。
+
 ## 參考資料
+
+### IDE 設定
+
+- [How to config visual studio to use UTF-8 as the default encoding for all projects?](https://stackoverflow.com/a/65945041)
+
+### 基礎建置
+
+- [How can I rename a project folder from within Visual Studio?](https://stackoverflow.com/questions/211241/how-can-i-rename-a-project-folder-from-within-visual-studio)
+- [Datetime utc issue after migrating to .NET Core 7](https://stackoverflow.com/a/75580112)
+- [Visual Studio: Add existing folder(s) to project](https://stackoverflow.com/a/40491760)
+
+### Repository 建置與資料庫連線
 
 - [Using the Repository Pattern with the Entity Framework](https://medium.com/@mlbors/using-the-repository-pattern-with-the-entity-framework-fa4679f2139)
 - [Scaffolding (Reverse Engineering)](https://learn.microsoft.com/en-us/ef/core/managing-schemas/scaffolding/?tabs=vs)
@@ -128,26 +148,68 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [[EF Core] 使用.NET Core CLI建立資料庫實體類型](https://dotblogs.com.tw/jerry809/2019/03/13/105934)
 - [Creating a Model for an Existing Database in Entity Framework Core](https://www.entityframeworktutorial.net/efcore/create-model-for-existing-database-in-ef-core.aspx)
 - [Pomelo EntityFrameworkCore Mysql - Getting Started](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/blob/master/README.md#getting-started)
+
+### AutoMapper
+
 - [AutoMapper —— 類別轉換超省力](https://igouist.github.io/post/2020/07/automapper/)
 - [Dependency Injection - Automapper documentation](https://docs.automapper.org/en/stable/Dependency-injection.html)
-- [How can I rename a project folder from within Visual Studio?](https://stackoverflow.com/questions/211241/how-can-i-rename-a-project-folder-from-within-visual-studio)
-- [Does Swagger (Asp.Net Core) have a controller description?](https://stackoverflow.com/a/56395820)
-- [Datetime utc issue after migrating to .NET Core 7](https://stackoverflow.com/a/75580112)
-- [How to add method description in Swagger UI in WebAPI Application](https://stackoverflow.com/a/52958904)
-- [Swashbuckle.AspNetCore Include Descriptions From XML Comments](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments)
-- [How to config visual studio to use UTF-8 as the default encoding for all projects?](https://stackoverflow.com/a/65945041)
-- [Visual Studio: Add existing folder(s) to project](https://stackoverflow.com/a/40491760)
+
+### Configuration
+
+- [Configuration in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-7.0)
+- [Non-prefixed environment variables](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-7.0&WT.mc_id=DT-MVP-5002040#non-prefixed-environment-variables)
+- [ASP.NET Core Configuration values sometimes returns empty in Kubernetes](https://stackoverflow.com/a/63736378)
+- [ASP.NET Core Environment variable colon in Linux](https://stackoverflow.com/a/40094999)
+
+### Docker 相關
+
 - [[Docker] .NET Core 的 Dockerfile 指令詳解](https://www.dotblogs.com.tw/fire/2022/10/27/225738)
 - [dotnet publish](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-publish)
 - [使用 dotnet 命令列工具發行 .NET 6 專案](https://blog.darkthread.net/blog/dotnet6-publish-notes/)
 - [教學課程：容器化 .NET 應用程式](https://learn.microsoft.com/zh-tw/dotnet/core/docker/build-container?tabs=windows)
 - [Override ASP.NET Core appsettings key name that as dots with environment variable in a container](https://stackoverflow.com/a/74596837)
-- [Non-prefixed environment variables](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-7.0&WT.mc_id=DT-MVP-5002040#non-prefixed-environment-variables)
-- [ASP.NET Core Configuration values sometimes returns empty in Kubernetes](https://stackoverflow.com/a/63736378)
-- [ASP.NET Core Environment variable colon in Linux](https://stackoverflow.com/a/40094999)
+
+### 驗證與 Swagger 相關
+
+- [Does Swagger (Asp.Net Core) have a controller description?](https://stackoverflow.com/a/56395820)
+- [How to add method description in Swagger UI in WebAPI Application](https://stackoverflow.com/a/52958904)
+- [Swashbuckle.AspNetCore Include Descriptions From XML Comments](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments)
+- [ASP.NET Core 驗證的概觀](https://learn.microsoft.com/zh-tw/aspnet/core/security/authentication/?view=aspnetcore-7.0)
 - [How to set base path property in swagger for .Net Core Web API](https://stackoverflow.com/a/61966213)
 - [What's the difference between HttpRequest.Path and HttpRequest.PathBase in ASP.NET Core?](https://stackoverflow.com/a/58615034)
 - [Enabling authentication in swagger](https://stackoverflow.com/questions/71622325/enabling-authentication-in-swagger)
 - [在 Swagger UI 加上驗證按鈕，讓 Request Header 傳遞 Authorize Token](https://igouist.github.io/post/2021/10/swagger-enable-authorize/)
+- [Using Authorization with Swagger in ASP.NET Core](https://code-maze.com/swagger-authorization-aspnet-core/)
 - [是誰在敲打我窗？什麼是 JWT ？](https://5xruby.tw/posts/what-is-jwt)
 - [Write custom ASP.NET Core middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)
+- [A web app that calls web APIs: Acquire a token for the app](https://learn.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-call-api-acquire-token?tabs=aspnetcore)
+- [How to Add a BearerToken to an HttpClient Request](https://code-maze.com/add-bearertoken-httpclient-request/)
+- [How to get access token from HttpContext in .Net core 2.0](https://stackoverflow.com/a/52887430)
+- [Fetch access token from authorization header without bearer prefix](https://stackoverflow.com/a/63311105)
+- [Why is StringValues used for Request.Query values?](https://stackoverflow.com/a/48189292)
+
+### HttpClient 相關
+
+- [在 ASP.NET Core 中使用 IHttpClientFactory 發出 HTTP 要求](https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/http-requests?view=aspnetcore-7.0)
+- [.NET Core 中正確使用 HttpClient 的姿勢](https://www.cnblogs.com/willick/p/net-core-httpclient.html)
+- [[C#] Web API - HttpClient 入門](https://marcus116.blogspot.com/2018/02/c-web-api-httpclient.html)
+- [.net services.AddHttpClient Automatic Access Token Handling](https://stackoverflow.com/a/68306750)
+
+### Middleware 相關
+
+- [ASP.NET Core 中介軟體](https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/middleware/?view=aspnetcore-7.0)
+- [ASP.NET Core 基礎 - Middleware](https://blog.darkthread.net/blog/aspnetcore-middleware-lab/)
+- [Setting middleware for specific controller in ASP.NET Core](https://stackoverflow.com/a/76029185)
+- [Custom middleware (or authorize) for specific route in ASP .NET Core 3.1 MVC](https://stackoverflow.com/a/61215529)
+- [Use Middleware for some controllers](https://stackoverflow.com/a/66776177)
+- [.net-core middleware return blank result](https://stackoverflow.com/a/46139237)
+- [Write custom ASP.NET Core middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)
+
+### Filter 相關
+
+- [ASP.NET Core 中的篩選條件](https://learn.microsoft.com/zh-tw/aspnet/core/mvc/controllers/filters?view=aspnetcore-7.0)
+- [Custom Authorization Attribute in .Net Core 5](https://stackoverflow.com/a/67259993)
+- [How do you create a custom AuthorizeAttribute in ASP.NET Core?](https://stackoverflow.com/a/48228330)
+- [ASP.NET Core Web API custom AuthorizeAttribute issue](https://stackoverflow.com/a/66538677)
+- [How can I use Dependency Injection in a .Net Core ActionFilterAttribute?](https://stackoverflow.com/a/52725674)
+- [async action filter: Async & AuthorizeAttribute in ASP.NET WEB API](https://stackoverflow.com/a/52880347)
