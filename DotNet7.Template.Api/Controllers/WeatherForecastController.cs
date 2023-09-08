@@ -1,4 +1,6 @@
 using AutoMapper;
+using DotNet7.Template.Api.Filters;
+using DotNet7.Template.Api.Models.ServiceModels;
 using DotNet7.Template.Api.Models.ViewModels;
 using DotNet7.Template.Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +36,19 @@ namespace DotNet7.Template.Api.Controllers
         {
             return _mapper.Map<List<WeatherForecastViewModel>>(
                 _weatherService.Get());
+        }
+
+        /// <summary>
+        /// 取得使用者資訊 (範例用，由於未宣告 SSO 網址，因此會得到 500 回應)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("User")]
+        [TypeFilter(typeof(VerifyAccessTokenAuthorizeAttribute))]
+        public string GetUser()
+        {
+            UserServiceModel user = (UserServiceModel)HttpContext.Items["User"]!;
+
+            return $"I am {user.Username}";
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using DotNet7.Template.Api.HttpClients;
+using DotNet7.Template.Api.Models.ServiceModels;
 
 namespace DotNet7.Template.Api.Filters
 {
@@ -25,27 +26,37 @@ namespace DotNet7.Template.Api.Filters
                 return;
             }
 
-            bool authorized = await _verifyAccessToken(accessToken);
+            UserServiceModel? authorized = await _verifyAccessToken(accessToken);
 
-            if (!authorized)
+            if (authorized == null)
             {
                 context.Result = new UnauthorizedResult();
                 return;
             }
+
+            context.HttpContext.Items["User"] = authorized;
         }
 
-        private async Task<bool> _verifyAccessToken(string? accessToken)
+        private async Task<UserServiceModel?> _verifyAccessToken(string? accessToken)
         {
             if (string.IsNullOrEmpty(accessToken))
             {
-                return false;
+                return null;
             }
 
             _singleSignOnClient.AddHeaders("Authorization", accessToken);
 
             var result = await _singleSignOnClient.VerifyAuthorization();
 
-            return result.IsSuccessStatusCode;
+            if (!result.IsSuccessStatusCode)
+            {
+                return null;
+            };
+
+            HttpClientBaseResponseServiceModel<UserServiceModel>? response =
+                await result.Content.ReadFromJsonAsync<HttpClientBaseResponseServiceModel<UserServiceModel>>();
+
+            return (response == null) ? null : response.Data;
         }
     }
 }

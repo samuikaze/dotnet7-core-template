@@ -119,9 +119,13 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 自行撰寫的 Middleware 的以參考[這篇文章](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)進行撰寫，並存於 `Middlewares` 資料夾中，
 再打開 `Extensions/MiddlewareExtension.cs` 檔，加入 `builder.UseMiddleware<YourMiddlewareClassName>()` 即可。
 
+> 如果需要將資料傳遞到 Controller 中，可以利用 `context.HttpContext.Items` 當作傳遞方法。
+
 ## Filter
 
 自行撰寫的 Filter 請放置於 `Filters` 資料夾中，其中若 Filter 中的建構式包含有依賴注入的部份，Controller 使用時請以 `[TypeFilter(typeof(YourFilterName))]` 撰寫。
+
+> 如果需要將資料傳遞到 Controller 中，可以利用 `context.HttpContext.Items` 當作傳遞方法。
 
 ## HttpClient
 
@@ -138,6 +142,7 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [How can I rename a project folder from within Visual Studio?](https://stackoverflow.com/questions/211241/how-can-i-rename-a-project-folder-from-within-visual-studio)
 - [Datetime utc issue after migrating to .NET Core 7](https://stackoverflow.com/a/75580112)
 - [Visual Studio: Add existing folder(s) to project](https://stackoverflow.com/a/40491760)
+- [! (null-forgiving) operator (C# reference)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-forgiving)
 
 ### Repository 建置與資料庫連線
 
@@ -194,6 +199,7 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [.NET Core 中正確使用 HttpClient 的姿勢](https://www.cnblogs.com/willick/p/net-core-httpclient.html)
 - [[C#] Web API - HttpClient 入門](https://marcus116.blogspot.com/2018/02/c-web-api-httpclient.html)
 - [.net services.AddHttpClient Automatic Access Token Handling](https://stackoverflow.com/a/68306750)
+- [HTTP 有效內容回應 - 使用 HttpClient 類別提出 HTTP 要求](https://learn.microsoft.com/zh-tw/dotnet/fundamentals/networking/http/httpclient#http-valid-content-responses)
 
 ### Middleware 相關
 
@@ -204,6 +210,8 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [Use Middleware for some controllers](https://stackoverflow.com/a/66776177)
 - [.net-core middleware return blank result](https://stackoverflow.com/a/46139237)
 - [Write custom ASP.NET Core middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)
+- [Is it possible to send values to controller from middleware in aspnet core api?](https://stackoverflow.com/a/39022636)
+- [ASP.NET Core Middleware Passing Parameters to Controllers](https://stackoverflow.com/a/42789732)
 
 ### Filter 相關
 
@@ -213,3 +221,5 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [ASP.NET Core Web API custom AuthorizeAttribute issue](https://stackoverflow.com/a/66538677)
 - [How can I use Dependency Injection in a .Net Core ActionFilterAttribute?](https://stackoverflow.com/a/52725674)
 - [async action filter: Async & AuthorizeAttribute in ASP.NET WEB API](https://stackoverflow.com/a/52880347)
+- [HttpContext.Items with ASP.NET MVC](https://stackoverflow.com/a/1135703)
+- [ASP.NET Core 中的存取 HttpContext](https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/http-context?view=aspnetcore-7.0)
