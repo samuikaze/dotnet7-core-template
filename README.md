@@ -143,6 +143,8 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 - [Datetime utc issue after migrating to .NET Core 7](https://stackoverflow.com/a/75580112)
 - [Visual Studio: Add existing folder(s) to project](https://stackoverflow.com/a/40491760)
 - [! (null-forgiving) operator (C# reference)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-forgiving)
+- [在 ASP.NET 核心中啟用跨原始來源要求 （CORS）](https://learn.microsoft.com/zh-tw/aspnet/core/security/cors?view=aspnetcore-7.0)
+- [How to enable CORS in ASP.NET Core](https://stackoverflow.com/a/31942128)
 
 ### Repository 建置與資料庫連線
 

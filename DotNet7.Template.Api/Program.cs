@@ -3,6 +3,8 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+CorsHandlerExtension.ConfigureCorsHeaders(builder.Services);
+
 // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -47,6 +49,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.ConfigureMiddlewares();
+
+app.UseCors(CorsHandlerExtension.CorsPolicyName);
 
 app.MapControllers();
 
