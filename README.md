@@ -6,7 +6,7 @@
 
 1. 請先關閉 Visual Studio 後，將資料夾名稱重新命名
 2. 以 Visual Studio 重新開啟專案，並針對 Api 專案中 `ProjectReference` 的路徑做修改
-	> 若找不到此宣告，則可跳過這步驟
+    > 若找不到此宣告，則可跳過這步驟
 3. 將 API、Repository 專案名稱重新命名
 4. 針對專案點選右鍵 -> 同步命名空間
 5. 修改 `build-push-deploy.yml` 檔中的 `DotNet7.Template.Api/Dockerfile` 將 `DotNet7.Template.Api` 修改為正確的專案名稱
@@ -35,12 +35,12 @@ Service 與 Repository 的類別與介面需進行綁定，否則 DI 將無法�
 1. 先將 Repository 專案設定為啟動專案
 2. 使用以下指令將指定資料庫中的資料表進行反向工程，建立出 Model 物件
 
-	```Powershell
-	Scaffold-DbContext "Server=<SERVER_URI>; Port=<SERVER_PORT>; Database=<DATABASE_NAME>; User ID=<DATABASE_USERNAME>; Password=<DATABASE_PASSWORD>" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -ContextDir DBContexts -Tables <TABLE_NAME> -Project <REPOSITORY_PROJECT_NAME> -Force -NoOnConfiguring
-	```
+    ```Powershell
+    Scaffold-DbContext "Server=<SERVER_URI>; Port=<SERVER_PORT>; Database=<DATABASE_NAME>; User ID=<DATABASE_USERNAME>; Password=<DATABASE_PASSWORD>" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -ContextDir DBContexts -Tables <TABLE_NAME> -Project <REPOSITORY_PROJECT_NAME> -Force -NoOnConfiguring
+    ```
 
 3. 打開 `Extensions/DatabaseExtension.cs`，將最下方的註解打開，並將 DBContext 修改為正確的類別
-	> 若有多個 DBContext 也請在這邊一並宣告
+    > 若有多個 DBContext 也請在這邊一並宣告
 4. 將 Api 專案設定為啟動專案
 
 ## AutoMapper Profile 宣告
@@ -116,10 +116,63 @@ string httpScheme = (app.Environment.IsDevelopment()) ? httpRequest.Scheme : "ht
 
 ## Middlewares
 
-自行撰寫的 Middleware 的以參考[這篇文章](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)進行撰寫，並存於 `Middlewares` 資料夾中，
-再打開 `Extensions/MiddlewareExtension.cs` 檔，加入 `builder.UseMiddleware<YourMiddlewareClassName>()` 即可。
+> 請參考[這篇文章](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-7.0)
 
 > 如果需要將資料傳遞到 Controller 中，可以利用 `context.HttpContext.Items` 當作傳遞方法。
+
+1. 在 `Middlewares` 資料夾下建立 Middleware
+
+    > 這邊使用 `ExampleMiddleware` 當作範例
+
+    ```csharp
+    namespace DotNet7.Template.Api.Middlewares
+    {
+        public class ExampleMiddleware
+        {
+            private readonly RequestDelegate _next;
+
+            public ExampleMiddleware(RequestDelegate next)
+            {
+                _next = next;
+            }
+
+            public async Task Invoke(HttpContext context)
+            {
+                // 在處理請求「前」要先執行的程式
+
+                await _next(context);
+
+                // 在處理請求「後」要先執行的程式
+            }
+        }
+    }
+    ```
+
+2. 打開 `Extensions/MiddlewareExtension.cs` 將 Middleware 引入
+
+    ```csharp
+    {
+        public static IApplicationBuilder ConfigureMiddlewares(this IApplicationBuilder builder)
+        {
+            // 引入 Middleware
+            builder.UseMiddleware<ExampleMiddleware>();
+
+            return builder;
+        }
+    }
+    ```
+
+3. 確認 `Program.cs` 中的 `app.ConfigureMiddlewares();` 有沒有被啟用
+
+    ```csharp
+    ...
+    var app = builder.Build();
+
+    app.ConfigureMiddlewares();
+    ...
+    ```
+
+4. 完成
 
 ## Filter
 

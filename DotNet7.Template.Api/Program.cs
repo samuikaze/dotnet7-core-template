@@ -24,6 +24,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
+app.ConfigureMiddlewares();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -47,8 +49,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-app.ConfigureMiddlewares();
 
 app.UseCors(CorsHandlerExtension.CorsPolicyName);
 
